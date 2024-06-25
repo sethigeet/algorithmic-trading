@@ -1,0 +1,571 @@
+\chapter{Technical Analysis}
+
+\section{Overview}
+Technical Analysis is a research technique to identify trading opportunities in market based on the actions of market participants. The actions of markets participants can be visualized by means of a stock chart. Over time, patterns are formed within these charts and each pattern conveys a certain message.
+
+\nt{Technical Analysis (TA) is best used to identify short term trades. Do not use TA to identify long term investment opportunities.}
+
+\section{Assumptions in Technical Analysis}
+\begin{enumerate}
+  \item \textbf{Markets discount everything}: All known and unknown information in the public domain is reflected in the latest stock price.
+  \item \textbf{Prices move in trends}: All major moves in the market are outcomes of trends.
+  \item \textbf{History tends to repeat itself}: In the TA context, the price trend tends to repeat itself. This happens because market participants consistently react to price movements in a remarkable similar way, each and every time the price moves in a certain direction.
+\end{enumerate}
+
+\section{Graphs}
+
+\subsection{Line Chart}
+This is the most basic chart type and it uses only one data point to form the chart.
+
+When it comes to technical analysis, a line chart is formed by plotting the \textbf{closing prices} of a stock or an index.
+
+\subsection{Bar Chart}
+This is a slightly more comprehensive chart as it display all the four price variables namely open, high, low, and close.
+
+It has three main components:
+\begin{enumerate}
+  \item \textbf{The central line}: The top of this line indicated the highest price the stock had reached while the bottom indicates the lowest price in the same period.
+  \item \textbf{The left mark/tick}: It indicates the open price
+  \item \textbf{The right mark/tick}: It indicates the close price
+\end{enumerate}
+
+\ex{Bar Chart}{For example, assume the OHLC data for a stock is as follows:
+
+  \begin{center}
+    \begin{tabular}{ c c }
+      Open  & 65 \\ 
+      High  & 70 \\  
+      Low   & 60 \\  
+      Close & 68
+    \end{tabular}
+  \end{center}
+
+The bar chart for this will look like the following:
+
+  \begin{center}
+    \begin{tikzpicture}
+      \draw[very thick,color=myb] (0, 0) -- (0, 4);
+      \node at (0,4.5) {High = 70};
+      \node at (0,-0.5) {Low = 60};
+
+      \draw[very thick,color=myr] (-1, 2) -- (0, 2);
+      \node[anchor=east] at (-1, 2) {Open = 65};
+
+      \draw[very thick,color=myg] (1, 3) -- (0, 3);
+      \node[anchor=west] at (1, 3) {Close = 68};
+    \end{tikzpicture}
+  \end{center}
+}
+
+\subsection{Candlestick Chart}
+This chart is very similar to the bar chart with the difference being that the open and close prices are shown using a rectangular body instead of wicks on the left and right.
+
+A candlestick chart is classified as a bullish or bearish candle usually represented by blue/green/white and red/black candles respectively.
+
+It has three main components:
+\begin{enumerate}
+  \item \textbf{The central real body}: The real body, rectangular in shape, connects the opening and closing price.
+  \item \textbf{Upper shadow}: Connects the high point to the close.
+  \item \textbf{Lower shadow}: Connects the low point to the open.
+\end{enumerate}
+
+\ex{Candlestick Chart}{For example, assume the OHLC data for a stock is as follows:
+
+  \begin{center}
+    \begin{tabular}{ c c }
+      Open  & 65 \\ 
+      High  & 70 \\  
+      Low   & 60 \\  
+      Close & 68
+    \end{tabular}
+  \end{center}
+
+The candlestick for this will look like the following:
+
+  \begin{center}
+    \begin{tikzpicture}
+      \centering
+      \draw[very thick,color=myg] (0, 0) -- (0, 4);
+      \node at (0,4.5) {High = 70};
+      \node at (0,-0.5) {Low = 60};
+
+      \filldraw[color=myg, fill=myg!60!white, very thick] (-0.25,3) rectangle (0.25,2);
+      \node[anchor=east] at (-0.5, 2) {Open = 65};
+      \node[anchor=west] at (0.5, 3) {Close = 68};
+    \end{tikzpicture}
+  \end{center}
+}
+
+\nt{One needs to pay some attention to the length of the candle while trading based on candlestick patterns. One should avoid trading based on subdued short candles.}
+
+\section{Single Candlestick Patterns}
+
+\subsection{The Marubuzo}
+\dfn{The Marubuzo}{It is defined as a candlestick with no upper and lower shadow. It has just the real body.}
+\begin{enumerate}
+  \item Bullish Marubuzo: Open = Low and Close = High
+  \item Bearish Marubuzo: Open = High and Close = Low
+\end{enumerate}
+
+\begin{figure}[h]
+  \centering
+
+  \begin{tikzpicture}
+    \filldraw[color=myg, fill=myg!60!white, very thick] (-1,2) rectangle (-0.5,0);
+
+    \filldraw[color=myr, fill=myr!60!white, very thick] (0.5,2) rectangle (1,0);
+  \end{tikzpicture}
+  \caption{Bullish and Bearish Marubuzo}
+\end{figure}
+
+A \textbf{risk taker} would buy the stock in the same time interval in which the marubuzo occurred. Obviously, one needs to validate if the stick will be a marubuzo. This can be easily done by checking if the close price is approximately equal to the high price and the opening price is approximately equal to the low price just a few moments before the interval of the candle stick ends.
+
+While a \textbf{risk averse} trader would buy the stock in the next interval right after the marubuzo occurs.
+
+\newpage
+
+\subsection{The Spinning Top}
+The spinning top candlestick can be described as follows:
+\begin{itemize}
+  \item These candles have a small real body.
+  \item The upper and lower shadows are almost equal.
+\end{itemize}
+
+\begin{figure}[h]
+  \centering
+
+  \begin{tikzpicture}
+    \draw[myg, very thick] (-0.75, 0) -- (-0.75, 3);
+    \filldraw[color=myg, fill=myg!60!white, very thick] (-1,2) rectangle (-0.5,1);
+
+    \draw[myr, very thick] (0.75, 0) -- (0.75, 3);
+    \filldraw[color=myr, fill=myr!60!white, very thick] (0.5,2) rectangle (1,1);
+  \end{tikzpicture}
+  \caption{Bullish and Bearish Spinning Tops}
+\end{figure}
+
+\subsubsection{Significance of the upper and lower shadow}
+\begin{enumerate}
+  \item The presence of the upper shadow tells us that the bulls did attempt to take the market higher. However, they were not really successful.
+  \item The presence of the lower shadow tells us that the bears did attempt to take the market lower. However, they were not really successful.
+\end{enumerate}
+
+\nt{Looking at a spinning top in isolation does not mean much. It just conveys indecision as both bulls and bears were not able to influence the markets. However when you see the spinning top with respect to the trend in the chart it gives out a really powerful message based on which you can position your stance in the markets.}
+
+\subsubsection{Spinning tops in a downtrend}
+
+In a down trend, the bears are in control as they manage to take the price lower. However, with the spinning top in a down trend, the bears cold be consolidating their position before resuming another round of selling or the bulls could have arrested the price fall and have tried to hold onto their position.
+
+\subsubsection{Spinning tops in a uptrend}
+
+This case is very similar to what happens in a downtrend but reversed. That is, the bulls are in control, however, now they might be going for another buying round or the bears might have entered and are trying to make the prices fall but are unsuccessful.
+
+\newpage
+
+\subsection{Paper Umbrella}
+
+\dfn{Paper Umbrella Candlestick}{
+  To qualify a candle as a paper umbrella, the length of the lower shadow should be at least \textbf{twice the length of the real body}.
+}
+
+{\large Different types of paper umbrella candlesticks:}
+\begin{enumerate}
+  \item If the paper umbrella appears at the bottom end of a downward rally, it is called the \textbf{Hammer}.
+  \item If the paper umbrella appears at the top end of a uptrend rally, it is called the \textbf{Hanging man}.
+\end{enumerate}
+
+\begin{figure}[h]
+  \centering
+
+  \begin{tikzpicture}
+    \draw[myg, very thick] (-0.75, 0) -- (-0.75, 3);
+    \filldraw[color=myg, fill=myg!60!white, very thick] (-1,3) rectangle (-0.5,2.5);
+
+    \draw[myr, very thick] (0.75, 0) -- (0.75, 3);
+    \filldraw[color=myr, fill=myr!60!white, very thick] (0.5,3) rectangle (1,2.5);
+  \end{tikzpicture}
+  \caption{Bullish and Bearish Paper Umbrellas}
+\end{figure}
+
+\nt{The hammer or hanging man can be of any color as it does not really matter as long as it qualifies 'the shadow to real body' ratio. However, it is slightly more comfortable to see a green and red colored real body respectively.}
+
+\subsection{The Shooting Star}
+
+\dfn{Shooting Star}{The shooting star looks just like an inverted paper umbrella. Hence, the shooting star does not a long lower shadow. Instead, it has a long upper shadow where the length of the upper shadow is at least twice the length of the real body.}
+
+\nt{Just like the paper umbrellas, the color of the shooting star does not matter though the pattern is slightly more reliable if the real body is red.}
+
+\begin{itemize}
+  \item The longer the upper wick, the more bearish the pattern is.
+  \item The shooting star is a bearish patter; hence the prior trend should be bullish.
+\end{itemize}
+
+\begin{figure}[h]
+  \centering
+
+  \begin{tikzpicture}
+    \draw[myg, very thick] (-0.75, 0) -- (-0.75, 3);
+    \filldraw[color=myg, fill=myg!60!white, very thick] (-1,0.5) rectangle (-0.5,0);
+
+    \draw[myr, very thick] (0.75, 0) -- (0.75, 3);
+    \filldraw[color=myr, fill=myr!60!white, very thick] (0.5,0.5) rectangle (1,0);
+  \end{tikzpicture}
+  \caption{Bullish and Bearish Shooting Stars}
+\end{figure}
+
+\section{Multiple Candlestick Patterns}
+
+\subsection{The Engulfing Pattern}
+
+The engulfing pattern need two candlesticks, In a typical engulfing pattern, you will find a small candle followed by a relatively long candle which appears to engulf the smaller one.
+
+\begin{itemize}
+  \item If the engulfing pattern appears at the bottom of the trend, it is called the \textbf{Bullish Engulfing}.
+  \item If the engulfing pattern appears at the top of the trend, it is called the \textbf{Bearish Engulfing}.
+\end{itemize}
+
+\subsubsection{Bullish Engulfing Pattern}
+
+The prerequisites for this pattern are as follows:
+\begin{enumerate}
+  \item The prior trend must be a downtrend.
+  \item The first stick of the pattern (P1) should be a red candle reconfirming the bearishness in the market.
+  \item The 2nd candle of the pattern (P2) should be a green candle, long enough to engulf the red candle.
+\end{enumerate}
+
+\begin{figure}[h]
+  \centering
+
+  \begin{tikzpicture}
+    \draw[myr, very thick] (-0.5, -1) -- (-0.5, 4);
+    \filldraw[color=myr, fill=myr!60!white, very thick] (-0.75,1) rectangle (-0.25,2);
+
+    \draw[myg, very thick] (0.5, -1) -- (0.5, 4);
+    \filldraw[color=myg, fill=myg!60!white, very thick] (0.25,0) rectangle (0.75,3);
+  \end{tikzpicture}
+  \caption{Bullish Engulfing Pattern}
+\end{figure}
+
+\newpage
+
+\subsubsection{Bearish Engulfing Pattern}
+
+The prerequisites for this pattern are as follows:
+\begin{enumerate}
+  \item The prior trend must be a uptrend.
+  \item The first stick of the pattern (P1) should be a green candle reconfirming the bullishness in the market.
+  \item The 2nd candle of the pattern (P2) should be a red candle, long enough to engulf the green candle.
+\end{enumerate}
+
+\begin{figure}[h]
+  \centering
+
+  \begin{tikzpicture}
+    \draw[myg, very thick] (-0.5, -1) -- (-0.5, 4);
+    \filldraw[color=myg, fill=myg!60!white, very thick] (-0.75,1) rectangle (-0.25,2);
+
+    \draw[myr, very thick] (0.5, -1) -- (0.5, 4);
+    \filldraw[color=myr, fill=myr!60!white, very thick] (0.25,0) rectangle (0.75,3);
+  \end{tikzpicture}
+  \caption{Bearish Engulfing Pattern}
+\end{figure}
+
+\nt{The bearish engulfing pattern suggests a short trade.}
+
+\subsection{The Piercing Pattern}
+
+The piercing pattern is very similar to the bullish engulfing pattern with a very minor variation. In a bullish engulfing pattern the P2’s blue candle engulfs P1’s red candle completely. However in a piercing pattern P2’s blue candle partially engulfs P1’s red candle, however the engulfing should be between 50\% and less than 100\%.
+
+\subsection{The Dark Cloud Cover}
+
+The dark cloud cover is very similar to the bearish engulfing pattern with a minor variation. In a bearish engulfing pattern the red candle on P2 engulfs P1’s blue candle completely. However in a dark cloud cover, the red candle on P2 engulfs about 50 to 100\% of P1’s blue candle. The trade set up is exactly the same as the bearish engulfing pattern.
+
+\tip{Think about the dark cloud cover as the inverse of a piercing pattern.}{}
+
+\newpage
+
+\subsection{The Harami Pattern}
+
+\subsubsection{The Bullish Harami}
+It is a bullish pattern appearing at the bottom end of the chart. It is similar to the engulfing pattern.
+
+\begin{figure}[h]
+  \centering
+
+  \begin{tikzpicture}
+    \draw[myr, very thick] (-0.5, -1) -- (-0.5, 4);
+    \filldraw[color=myr, fill=myr!60!white, very thick] (-0.75,3) rectangle (-0.25,0);
+
+    \draw[myg, very thick] (0.5, -1) -- (0.5, 4);
+    \filldraw[color=myg, fill=myg!60!white, very thick] (0.25,2) rectangle (0.75,1);
+  \end{tikzpicture}
+  \caption{Bullish Harami Pattern}
+\end{figure}
+
+\subsubsection{The Bearish Harami}
+It is a bearish pattern appearing at the top end of the chart. It is similar to the engulfing pattern. It presents the trader with a opportunity to initiate a short trade.
+
+\begin{figure}[h]
+  \centering
+
+  \begin{tikzpicture}
+    \draw[myg, very thick] (-0.5, -1) -- (-0.5, 4);
+    \filldraw[color=myg, fill=myg!60!white, very thick] (-0.75,3) rectangle (-0.25,0);
+
+    \draw[myr, very thick] (0.5, -1) -- (0.5, 4);
+    \filldraw[color=myr, fill=myr!60!white, very thick] (0.25,2) rectangle (0.75,1);
+  \end{tikzpicture}
+  \caption{Bearish Harami Pattern}
+\end{figure}
+
+\subsection{The Gaps}
+
+\subsubsection{Gap Up Opening}
+It indicated buyer's enthusiasm. Buyers are willing to buy stocks at a price higher than the previous day's close. Hence, because of enthusiastic buyer’s outlook, the stock (or the index) opens directly above the previous day’s close.
+
+\subsubsection{Gap Down Opening}
+Similar to gap up opening, a gap down opening shows the enthusiasm of the bears. The bears are so eager to sell, that they are willing to sell at a price lower than the previous day’s close.
+
+\subsection{The Morning Star}
+
+The morning star is a bullish candlestick pattern which evolves over three periods (i.e. a three candlestick pattern). It is a downtrend reversal pattern. The morning star appears at the bottom of a downtrend.
+
+The conditions for a morning star are:
+\begin{enumerate}
+  \item P1 should be a long red candle.
+  \item With a gap down opening, P2 should be either a doji or a spinning top.
+  \item P3 opening should be gap up, plus the closing price should be higher than the opening of P1.
+\end{enumerate}
+
+\begin{figure}[h]
+  \centering
+
+  \begin{tikzpicture}
+    \draw[myr, very thick] (-0.5, 0.75) -- (-0.5, 3.5);
+    \filldraw[color=myr, fill=myr!60!white, very thick] (-0.75,3) rectangle (-0.25,1);
+
+    \draw[myg, very thick] (0.5, 0) -- (0.5, 1.25);
+    \filldraw[color=myg, fill=myg!60!white, very thick] (0.25,0.75) rectangle (0.75,0.5);
+
+    \draw[myg, very thick] (1.5, 2) -- (1.5, 4);
+    \filldraw[color=myg, fill=myg!60!white, very thick] (1.25,3.25) rectangle (1.75,1.25);
+  \end{tikzpicture}
+  \caption{The Morning Star Pattern}
+\end{figure}
+
+\nt{A stop loss order for a trade made on the basis of a morning star should be put at the value equal to the lowest price among P1, P2 \& P3}
+
+\subsection{The Evening Star}
+
+The evening star is a bearish equivalent of the morning star. The evening star appears at the top end of an uptrend. Like the morning star, the evening star is a three candle formation and evolves over three trading sessions.
+
+The conditions for an evening star are:
+\begin{enumerate}
+  \item P1 should be a long blue candle.
+  \item With a up down opening, P2 should be either a doji or a spinning top.
+  \item P3 opening should be gap down, plus the closing price should be lower than the opening of P1.
+\end{enumerate}
+
+\begin{figure}[h]
+  \centering
+
+  \begin{tikzpicture}
+    \draw[myg, very thick] (-0.5, 2) -- (-0.5, 4);
+    \filldraw[color=myg, fill=myg!60!white, very thick] (-0.75,3.25) rectangle (-0.25,1.25);
+
+    \draw[myg, very thick] (0.5, 3.75) -- (0.5, 3.25);
+    \filldraw[color=myg, fill=myg!60!white, very thick] (0.25,3.5) rectangle (0.75,3.3);
+
+    \draw[myr, very thick] (1.5, 0) -- (1.5, 3.25);
+    \filldraw[color=myr, fill=myr!60!white, very thick] (1.25,3) rectangle (1.75,1);
+  \end{tikzpicture}
+  \caption{The Morning Star Pattern}
+\end{figure}
+
+\nt{A stop loss order for a trade made on the basis of an evening star should be put at the value equal to the highest price among P1, P2 \& P3}
+
+\section{The Support and Resistance}
+\dfn{The Resistance}{As the name suggests, resistance is something which stops the price from rising further. The resistance level is a price point on the chart where traders expect maximum supply (in terms of selling) for the stock/index. The resistance level is \textbf{always above the current market price}.}
+
+\dfn{The Support}{As the name suggests, the support is something that prevents the price from falling further. The support level is a price point on the chart where the trader expects maximum demand (in terms of buying) coming into the stock/index. Whenever the price falls to the support line, it is likely to bounce back. The support level is \textbf{always below the current market price}.}
+
+\section{Volume}
+\dfn{Volume}{Volumes indicate how many shares are bought and sold over a given period of time. The more active the share, higher would be its volume.}
+
+\subsection{Volume Trends}
+\begin{center}
+  \begin{tabular}[h]{ | c | c | c | }
+    \hline
+    \textbf{Price} & \textbf{Volume} & \textbf{Expectation} \\
+    \hline
+    Increases & Increases & Bullish \\
+    Increases & Decreases & Caution - weak hands buying \\
+    Decreases & Increases & Bearish \\
+    Decreases & Decreases & Caution - weak hands selling \\
+    \hline
+  \end{tabular}
+\end{center}
+
+\imp{As a practice, traders usually compare the current session's volume over the average of the last 10 trading sessions.}{
+  \begin{align*}
+    \textrm{current volume} > \textrm{average volume} & \Rightarrow \textrm{high volume} \\
+    \textrm{current volume} = \textrm{average volume} & \Rightarrow \textrm{average volume} \\
+    \textrm{current volume} < \textrm{average volume} & \Rightarrow \textrm{low volume}
+  \end{align*}
+}
+
+\subsection{Thought Process behind Volume Trends}
+When institutional investors buy or sell they obviously do not transact in small chunks. They buy very huge chunks. Now, if they were to buy a lot of shares from the open market, it will start reflecting in volumes. Besides, because they are buying a large chunk of shares, the share price also tends to go up.
+
+Usually institutional money is referred to as the \emph{smart money}. It is perceived that \textbf{smart money always makes wiser moves in the market compared to retail traders}. Hence following the smart money seems like a wise idea.
+
+\section{Moving Averages}
+
+\subsection{Simple Moving Averages}
+
+In this method, we give equal importance to all the data points being considered.
+
+\[
+  \textrm{SMA} = \sum_{i=0}^{N} \textrm{value}
+\]
+where $N$ is the number of data points being considered.
+
+\subsection{Exponential Moving Averages (EMA)}
+
+In this method, we give higher importance to the newer data points and lesser to the older ones.
+
+\[
+  \textrm{EMA}_i = \left( \textrm{value} \times K \right) + \left( \textrm{EMA}_{i-1} \times (1-K) \right)
+\]
+where $\textrm{EMA}_0$ which is the EMA for the first period is taken to be equal to the SMA for that period and $K$ is multiplier constant which is used to smoothen the curve. It can usually be calculated by the following formula:
+\[
+  K = \frac{2}{\textrm{number of observations} + 1}
+\]
+
+\ex{Using the SMA/EMA to make trades}{
+  \begin{enumerate}
+    \item Buy (go long) when the current market price turns greater than the 50 day SMA/EMA. Once you go long, you should stay invested till the necessary sell condition is satisfied.
+    \item Exit the long position (square off) when the current market price turns lesser than the 50 day SMA/EMA.
+  \end{enumerate}
+}
+
+
+\subsection{Moving Average Crossover System}
+In this system, instead of the usual single moving average, we combine two moving averages. This is referred to as \emph{smoothing}.
+
+\ex{50 Day EMA + 100 Day EMA}{A typical example of this would be to combine a 50 day EMA, with a 100 day EMA. The shorter moving average (50 days in this case) is also referred to as the \emph{faster moving average}. The longer moving average (100 days moving average) is referred to as the \emph{slower moving average}.}
+
+\subsubsection{Entry and Exit Rules for the Crossover System:}
+\begin{enumerate}
+  \item Buy long when the short term moving average turns greater than the long term moving average. Stay in the trade as long as this condition is satisfied.
+  \item Exit the long position when the short term moving average turns lesser than the longer term moving average.
+\end{enumerate}
+
+\newpage
+
+\section{Indicators}
+
+\subsection{Overview}
+
+A technical indicator helps a trader analyze the price movement of a security.  Indicators are built on preset logic using which traders can supplement their technical study (candlesticks, volumes, S\&R) to arrive at a trading decision. Indicators help in buying, selling, confirming trends, and sometimes predicting trends.
+
+Indicators are of two types namely \textbf{leading} and \textbf{lagging}.
+
+\subsubsection{Leading Indicators}
+A leading indicator leads the price, meaning it usually signals the occurrence of a reversal or a new trend in advance.
+
+\imp{Leading indicators are notorious for giving false signals. Therefore, the trader should be highly alert while using leading indicators.}
+
+A majority of leading indicators are called oscillators as they oscillate within a bounded range.
+
+\subsubsection{Lagging Indicators}
+
+A lagging indicator on the other hand lags the price; meaning it usually signals the occurrence of a reversal or a new trend after it has occurred.
+
+One of the most popular indicators is the moving averages.
+
+\subsection{Momentum}
+\dfn{Momentum}{Momentum is the rate at which the price changes.
+
+For example if stock price is Rs.100 today and it moves to Rs.105 the next day, and Rs.115, the day after, we say the momentum is high as the stock price has changed by 15\% in just 3 days. However if the same 15\% change happened over let us say 3 months, we can conclude the momentum is low. So the more rapidly the price changes, the higher the momentum.}
+
+\subsection{Relative Strength Index (RSI)}
+
+RSI is a leading momentum indicator which helps in \textbf{identifying a trend reversal}.
+
+\nt{The term \emph{Relative Strength Index} can be a bit misleading as it does not compare the relative strength of two securities, but instead shows the internal strength of the security.}
+
+The objective of using RSI is to help the trader identify over sold and overbought price areas. Overbought implies that the positive momentum in the stock is so high that it may not be sustainable for long and hence there could be a correction. Likewise, an oversold position indicates that the negative momentum is high leading to a possible reversal.
+RSI gives out the strongest signals during the periods of sideways and non-trending ranges.
+
+\[
+  \textrm{RSI} = 100 - \frac{100}{1 + \textrm{RS}}
+\]
+\[
+  \textrm{RS} = \frac{\textrm{Average Gain}}{\textrm{Average Loss}}
+\]
+
+\dfn{Look-back Period}{The data points used for calculating the RSI determines the \emph{look-back period}.
+
+For example, if one is using daily price data and uses 14 data points for calculating the averages in the RS formula, the look-back period would be 14 days.}
+
+\subsubsection{Classical Interpretation of RSI}
+\begin{itemize}
+  \item When the RSI is between 0 and 30, the security is supposed to be oversold and is ready for an upward correction.
+  \item When the RSI is between 70 and 100, it is supposed to be heavily bought and is ready for a downward correction.
+\end{itemize}
+
+\subsubsection{Modern Interpretation of RSI}
+\begin{itemize}
+  \item If the RSI is fixed in an overbought region (0 to 30) for a prolonged period, look for buying opportunities instead of shorting.
+    \nt{The RSI stays in the overbought region for a prolonged period because of an excess positive momentum.}
+  \item If the RSI is fixed in an oversold region for a prolonged period, look for selling opportunities rather than buying.
+    \nt{The RSI stays in the oversold region for a prolonged period because of an excess negative momentum.}
+  \item If the RSI value starts moving away from the oversold value after a prolonged period, look for buying opportunities.
+    \ex{}{The RSI moving above 30 after a long time may mean that the stock may have bottomed out, hence a case for going long}
+  \item If the RSI value starts moving away from the overbought value after a prolonged period, look for selling opportunities.
+    \ex{}{The RSI moving below 70 after a long time may mean the stock has topped out, hence a case for shorting.}
+\end{itemize}
+
+\subsection{Moving Average Convergence and Divergence (MACD)}
+
+MACD is all about convergence and divergence of two moving averages. Convergence occurs when the two moving averages move towards each other, and a divergence occurs when the moving averages move away from each other.
+
+A standard MACD is calculated using a 12 day EMA and a 26 day EMA. We subtract the 26 day EMA from the 12 day EMA, to estimate the convergence and divergence (CD) value. A simple line of this graph is often referred to as the \emph{MACD line}.
+
+\subsubsection{Significance of Values of MACD}
+\begin{itemize}
+  \item The sign of the MACD just indicates the direction of the stock's movement.
+  \item The higher the magnitude of the MACD, the higher is the momentum.
+\end{itemize}
+
+\ex{}{For example if the 12 Day EMA is 6380, and 26 Day EMA is 6220 then the MACD value is +160. We also know that the shorter term average will generally be higher than the longer term only when the stock price is trending upwards. Hence \textbf{a positive MACD value indicates that the price is moving upwards!}}
+
+\subsubsection{Point of Convergence and Divergence}
+\begin{itemize}
+  \item When the MACD Line crosses the center line from the negative territory to positive territory, it means there is divergence between the two averages. This is a sign of increasing bullish momentum; therefore one should look at buying opportunities.
+  \item When the MACD line crosses the center line from positive territory to the negative territory it means there is convergence between the two averages. This is a sign of increasing bearish momentum; therefore one should look at selling opportunities.
+\end{itemize}
+
+\subsubsection{The Signal Line}
+Traders generally argue that while waiting for the MACD line to crossover the center line a bulk of the move would already be done and perhaps it would be late to enter a trade. To overcome this, there is an improvisation over this basic MACD line. The improvisation comes in the form of an additional MACD component which is the \emph{9 day signal line}. \textbf{A 9 day signal line is a exponential moving average (EMA) of the MACD line.}
+
+With these two lines (the MACD line and the signal line), a trade can follow a simple 2 line crossover strategy similar to the crossing over of 2 different moving averages and no longer wait for the center line cross over.
+
+\begin{itemize}
+  \item The sentiment is bullish when the MACD line crosses the 9 day EMA wherein MACD line is greater than the 9 day EMA. When this happens, the trader should look at buying opportunities.
+  \item The sentiment is bearish when the MACD line crosses below the 9 day EMA wherein the MACD line is lesser than the 9 day EMA. When this happens, the trader should look at selling opportunities.
+\end{itemize}
+
+\subsection{The Bollinger Bands (BB)}
+
+BBs are used to determine overbought and oversold levels, where a trader can try to sell when the price reaches the top of the band and try to buy when the price reached the bottom of the band.
+
+The BB has 3 components:
+\begin{enumerate}
+  \item \textbf{The Middle Line}: It is a 20 day SMA of the closing averages.
+  \item \textbf{The Upper Band}: It is a +2 standard deviation of the middle line.
+  \item \textbf{The Lower Band}: It is a -2 standard deviation of the middle line.
+\end{enumerate}
+
+\nt{The standard deviation (SD) is a statistical concept; which measures the variance of a particular variable from its average. In finance, the standard deviation of the stock price represents the volatility of a stock.}{For example, if the standard deviation of a stock is 12\%, it is as good as saying that the volatility of the stock is 12\%.}
