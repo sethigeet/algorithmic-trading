@@ -1,0 +1,286 @@
+\chapter{Risk Management \& Portfolio Optimization}
+
+\section{Risk}
+\subsection{Unsystematic Risk}
+\dfn{Unsystematic Risk}{At any given point, the drop in the stock price can only be attributed to company specific factors or internal factors. The risk of losing money owning to these factors is termed as \emph{Unsystematic risk}.}
+
+Unsystematic risk can be diversified, meaning instead of investing all the money in one company, one can choose to invest in 2-3 different companies (preferably from different sectors).
+
+\subsection{Diversification}
+\dfn{Diversification}{When one chooses to invest their money in multiple companies instead of a single one, they are said to be diversifying their portfolio. The different companies may be from the same or different sectors.}
+
+\tip{Unsystematic risk can be drastically reduced by diversifying investments especially when diversified into various sectors.}
+
+The higher the number of stocks in your portfolio, higher the diversification, and therefore lesser the unsystematic risk.
+This leads to a very important question - how many stocks should a good portfolio have so that the unsystematic risk is completely diversified.
+
+Research has it that up to 21 stocks in the portfolio will have the required necessary diversification effect and anything beyond 21 stocks may not help much in diversification.
+
+\newpage
+
+The risk vs number of stocks graphs follows an exponential decay pattern i.e. at the start as one adds more stocks, the risk reduces drastically but after about 20 stocks, the risk barely reduces on adding more stocks.
+
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[xmax=2, ymax=10, xmin=-1, ymin=-1,
+              axis lines=left,
+              xlabel={Number of Stocks}, ylabel=Risk,
+              yticklabels=\empty, xticklabels=\empty]
+            \addplot[blue!75!white] {e^(1-x)};
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Risk vs Number of Stocks}
+\end{figure}
+
+\subsection{Systematic Risk}
+\dfn{Systematic Risk}{Systematic risk is the risk that is common to all stocks in the markets. Systematic risk arises out of common market factors such as the macroeconomic landscape, political situation, geographical stability, monetary framework etc.}
+
+A few specific systematic risks which can drag the stock prices down are: –
+\begin{enumerate}
+  \item De-growth in GDP
+  \item Interest rate tightening
+  \item Inflation
+  \item Fiscal deficit
+  \item Geopolitical risk
+\end{enumerate}
+
+Systematic risk is inherent in the system and it \textbf{cannot really be diversified}. However, systematic risk can be \emph{hedged}.
+
+\section{Expected Return}
+Expecting a realistic return plays a pivotal role in investment management. The expected return can be calculated using the following formula:
+\[
+  \textrm{E} = \sum_{i=1}^n W_i R_i
+\]
+where $E$ is the expected return of the portfolio, $W_i$ is the weightage of the investment in the entire portfolio and $R_i$ is the expected return of that individual asset.
+
+\ex{Calculating expected return}{Let's say that you invested 25,000 in stock A and expect a return of 20\% and invest 25,000 in stock B while expecting 15\% return.
+
+Therefore, the expected return of the entire portfolio would be:
+\begin{align*}
+  E &= \frac{25,000}{25,000 + 25,000} \times 20 + \frac{25,000}{25,000 + 25,000} \times 15
+    &= \frac{1}{2} \times 20 + \frac{1}{2} \times 15
+    &= 17.5\%
+\end{align*}}
+
+\section{Variance \& Covariance}
+
+\subsection{Variance}
+\dfn{Variance}{The variance of stock returns is a measure of how much a stock’s return varies with respect to its average daily returns.}
+
+The formula to calculate variance is:
+\[
+  \sigma^2 = \sum \frac{(x-\mu)^2}{N}
+\]
+where $\sigma^2$ is the variance, $X$ is the daily return, $\mu$ is the average of the daily return and $N$ is the total number of observations.
+
+As an investor, one should look into the variance to determine the riskiness of the investment. A large variance indicates that the stock could be quite risky while a small variance can indicate lesser risk.
+
+\subsection{Covariance}
+\dfn{Covariance}{Covariance indicates how two (or more) variables move together. It tells us whether the two variables move together (in which case they share a positive covariance) or they move in the opposite direction (negatively covariance).}
+
+Covariance in the context of stock market measures how the stock prices of two stocks (or more) move together. The two stocks prices are likely to move in the same direction if they have a positive covariance; likewise, a negative covariance indicates that they two stocks move in opposite direction.
+
+\nt{\emph{Covariance} may sound similar to \emph{correlation}, however, the two are different.}
+
+Covariance of two stocks $S_1$ and $S_2$ can be calculated as follows:
+\[
+  \textrm{Covariance} = \sum \frac{ \left( \left( x_{S_1} - \mu_{S_1} \right) \times \left( x_{S_2} - \mu_{S_2} \right) \right)}{n-1}
+\]
+where $X_{S_i}$ is the daily return of stock $S_i$, $\mu_{S_i}$ is the average return of stock $S_i$ and $n$ is the total number of days.
+
+\imp{Portfolio managers strive to select stocks which share a negative covariance. The reason is quite simple – they want stocks in the portfolio which can hold up. Meaning if one stock goes down, they want, at least the other to hold up. This kind of counter balances the portfolio and reduces the overall risk.}
+
+\subsection{Variance \& Covariance Matrix}
+
+Covariance can only be calculated between 2 entities. In any ordinary portfolio, there would most likely be more that 2 stocks. In such a case, one would have to calculate the covariance between all of the stocks taking two at a time.
+
+For example, in a portfolio with 4 stocks, one would have to calculate 6 covariances. (Covariance between A \& B is the same as between B \& A).
+
+To organize this information properly, we generally calculate and tabulate them in a \emph{Variance - Covariance Matrix}.
+
+However, as we will see, this variance-covariance matrix alone does not convey much information and we will develop another matrix called the \emph{correlation matrix} to help us out. Using this correlation matrix, we will calculate the \emph{portfolio variance}.
+
+The size of the variance-covariance matrix for a portfolio with $k$ stocks will be $k \times k$. The formula for the elements of a variance-covariance matrix is:
+\[
+  \sum_{k \times k} = \frac{1}{n} X^T X
+\]
+where $n$ is the number of observations, $X$ is the excess return matrix ($n \times k$).
+
+\dfn{Excess Return Matrix ($X$)}{Excess return matrix is defined as the difference between stock’s daily return over its average return i.e. $x - \mu$}
+
+\nt{This variance-covariance matrix is a symmetric matrix because the covariance between A \& B is the same as between B \& A.}
+
+\imp{The principle diagonal values are the covariance of the entity with itself. This is the same as the variance of that entity. Therefore, the principle diagonal of the variance-covariance matrix contains the variances of each of the entities while the other entries contain the covariances between the two entities according to the row and column!}
+
+\subsection{Correlation Matrix}
+
+The correlation of two stocks $S_1$ and $S_2$ is expressed in terms of their covariance and their standard deviations ($\sqrt{\textrm{Variance}}$) as follows:
+\[
+  \textrm{Correlation} = \frac{Cov(S_1, S_2)}{\sigma_{S_1} \times \sigma_{S_2}}
+\]
+
+Using this formula, we can convert a variance-covariance matrix into a correlation matrix!
+
+\nt{The diagonal entries of a correlation matrix are all equal to 1!}
+
+\subsection{Portfolio Variance}
+
+\subsection{Overview}
+The first step in calculation portfolio variance is to assign weights to the stocks in the portfolio according to the amount of money invested in each stock.
+
+The next step is to calculate the \emph{weighted standard deviation}.
+\dfn{Weighted Standard Deviation}{It is simply the weight of a stock multiplied by its respective standard deviation.}
+
+\nt{The total weight should add up to 100\% i.e. the sum of the individual weights of the stocks will add up to 100\% but the weighted standard deviation will not!}
+
+Finally, we can calculate the \emph{Portfolio Variance} using the following formula:
+\[
+  \textrm{Portfolio Variance} = \sqrt{\textrm{Wt. SD}^T \times \textrm{Correlation Matrix} \times \textrm{Wt. SD}}
+\]
+where Wt. SD is the array of weighted standard deviations.
+
+\nt{Risk or variance or volatility is like a coin with two faces. Any price movement below our entry price is called risk while at the same time, the same price movement above our entry price is called return.}
+
+\subsection{Equity Curve}
+In a very lose sense, a typical equity curve helps you visualize the performance of the portfolio on a normalized scale of 100. In other words, it will help you understand how Rs.100/- invested in this portfolio would have performed over the given period.
+
+Basically, an \emph{equity curve} can be developed if we plot the portfolio value at a fixed interval (for example, daily). 
+
+\tip{The variance of the portfolio can hence be also calculated as the standard deviation of these values of the equity curve in a fixed interval!}
+
+\section{Expected Returns}
+
+\dfn{Expected Return}{The expected return of the portfolio is the sum of the average return of each stock multiplied bu its weight and further multiplied by 252 (the number of trading days in a year). In simple terms, we are scaling the daily returns to its annual returns and according to the investment made (the weights).}
+
+\nt{We can also scale the portfolio variance to represent annual variance by multiplying it by $\sqrt{252}$.}
+
+Portfolio returns are \emph{normally} distributed. If we plot the distribution of a portfolio, we are likely to get a normally distributed portfolio. And if the portfolio is normally distributed, then we can estimate the likely return of this portfolio over the next year with a certain degree of confidence.
+
+\[
+  \textrm{Expected return} = \textrm{Expected annualized return (calculated before)} \pm \textrm{annualized portfolio variance}
+\]
+
+The accuracy of this broadly varies across three levels:
+\begin{enumerate}
+  \item Level 1 - one standard deviation away: 68\% confidence
+  \item Level 2 - two standard deviation away: 95\% confidence
+  \item Level 3 - three standard deviation away: 99\% confidence
+\end{enumerate}
+
+\imp{Variance is measured in terms of standard deviation. So it is important to note that the annualized portfolio variance calculated above is just 1 standard deviation!}
+
+\section{Portfolio Optimization}
+
+Generally speaking, portfolio optimization is finding the best set of weights for a given set of stocks in the portfolio which maximizes returns while also minimizing risk!
+
+\dfn{Minimum Variance Portfolio}{There will be a combination 
+of weights possible such that the variance of the portfolio is minimum. This particular portfolio is also referred to as the “Minimum Variance Portfolio”. The minimum variance portfolio represents the least amount of risk you can take.}
+
+\dfn{Maximum Return Portfolio}{Similar to the minimum variance portfolio, this portfolio is made using weights so that the returns are maximized!}
+
+\nt{For a fixed level of risk/variance of a portfolio, we can create \textbf{at least two unique} portfolios. One such portfolio will yield the highest return among them and one will yield the lowest.}
+
+\subsection{Efficient Frontier}
+
+The scatter plot of the return vs risk data where for each risk percentage, maximum and minimum returns are calculated is known as the \emph{efficient frontier}.
+
+\section{Value at Risk}
+
+\emph{Value at Risk (VaR)} is a metric which gives an individual a sense of the worst case loss they would incur, if the most unimaginable were to occur the next morning.
+
+At the core of this approach lies the concept of normal distribution. We will discuss a 'quick and dirty' method to calculate \emph{VaR} now.
+
+The steps involved in calculating the portfolio VaR are:
+\begin{enumerate}
+  \item Identify the distribution of the portfolio returns.
+  \item Map the distribution (check if it is a normal distribution).
+  \item Arrange portfolio returns in ascending order.
+  \item The least value within the last 95\% entries is the portfolio VaR while the average of the last 5\% is the cumulative VaR or CVaR
+\end{enumerate}
+
+\nt{We have taken only 95\% of the data because the distribution being a normal distribution, we can expect 95\% of the data to be less than 2 SD away from the expected returns!}
+
+\ex{}{If we calculated the VaR to be -1.48\%, we can expect that the worst case loss of our portfolio would be -1.48\% with a confidence of 95\%!}
+
+\section{Position Sizing}
+Position sizing is all about answering how much capital you will expose to a particular trade given that you have ‘x’ amount of trading capital.
+
+One classic position sizing strategy which most people employ is the standard 5\% rule. The 5\% rule does not permit you to risk more than 5\% of the capital on a given trade.
+
+\subsection{Estimating Equity Capital}
+
+Essentially there are three main techniques or models out there to estimate the current equity capital one has.
+\begin{enumerate}
+  \item \textbf{Core Equity Model}: This model requires you to deduct the capital allocated to a trade from the existing capital. This way, the exposure to a trade goes on reducing as you ladder up more and more positions.
+  \item \textbf{Total Equity Model}: This model aggregates all the positions in the market along with its respective P\&L and cash balance to estimate the equity. That is, free cash along with the margins blocked and the P\&L per position is taken into consideration.
+  \item \textbf{Reduced Total Equity Model}: This model is a combination of both the others. It takes into account not only the remaining cash, but also the locked in profits.
+\end{enumerate}
+
+\ex{Reduced Total Equity Model}{Let us take an initial corpus of 1,00,000/- and let us set the maximum allowed position of 10\% of my corpus. For the first trade, I am allowed to spend a maximum of 10,000/-. Let's say I spend all of that. I am now having a corpus of 90,000/- which gives me a limit of 9,000/-. This is exactly like the \emph{Core Equity Model}. Now let's say that the stock I had bought is up by 5\%. What I can do now is put a stop-loss order at this price which ensures that I will get a minimum of this amount and then add this to my corpus while calculating the maximum position for my next trade!}
+
+\subsection{Methods for Position Sizing}
+
+\subsubsection{Unit per fixed amount}
+This is one of the simplest models to calculate position size. It requires you to simply state how many shares or lots (in case of futures) you will trade for a given amount.
+
+\ex{Unit per fixed amount position sizing model}{You may setup a position sizing strategy as buying up to 1 lot for every 1,00,000 of capital.}
+
+\nt{This \textbf{does not factor in the risk} of the investments.}
+
+\subsubsection{Percentage Margin}
+This technique requires the trader to position size based on the margins. The maximum amount of margins required for a trade should be set as a percentage of the total capital (calculated using one of the equity estimation models).
+
+This ensures that the trader pays roughly equal margin to all the position.
+
+However, volatility from each position could vary and the trader can end up with risky bets and therefore alters the entire risk profile of the portfolio.
+
+\subsubsection{Percentage Volatility}
+
+The percentage volatility model accounts for volatility of the underlying asset. The volatility as per this technique is not really the \emph{standard deviation}, but rather the daily expected movement in the underlying.
+
+\ex{Volatility i.e. daily expected movement}{For example, if SBI’s OHLC is 276, 279, 274, and 278, then the volatility for the day is simply the difference between low and high i.e $279 - 274 = 5$.}
+
+To get a sense of the generic volatility measured this way, one can look at the difference between low and high for last $n$ days and take an average. However, the only problem here would be that we would be ignoring the gap up and gap down openings. For this reason, Van Tharp suggest the use of \textbf{Average True Range} to measure the stock’s volatility.
+
+The \emph{Percentage Volatility} method of position sizing requires us to define the maximum amount of volatility exposure one can assume for the given equity capital.
+
+\ex{Percentage volatility position sizing model}{For example, if the equity capital is Rs.500,000/- then I could make a rule saying that I do not want to expose more than 2\% of the capital to volatility.}
+
+\subsubsection{Percentage Risk}
+The percentage risk method, relies upon your own assessment of \emph{loss} that you are willing to bear for a given trade. This, as you may know is also called the \emph{Stop loss} for the trade. The stop loss for a trade is the price at which you decide to close the trade and take a hit. The percentage risk technique controls the position size as a function of risk defined by stop loss.
+
+As a thumb rule, professional traders do not risk more than 1 to 3\% of their capital on any single trade.
+
+\ex{Percentage risk position sizing model}{Let us take an example of a future of stock. Let the total capital be $5,00,000$, the lot size be $1500$, the trade price be $393.65$, the target price be $400$ and the stop loss price be $390$. Therefore, the target value comes out to be $6.35$ and the stop loss value comes to be $3.65$. Let the margin required to trade one lot be $73,500$. 
+
+Technically, I can buy $5,00,000 / 73,500 = 6.8$ lots. But that would mean I could lose up to $3.65 \times 1500 \times 6 = 32,850$ on this trade. This is $\frac{32,850}{5,00,000} \times 100 = 6.57\%$ of my entire capital on one trade. This is not a good thing.
+
+So let me setup a maximum risk per trade as a percentage of my overall capital - say 1.5\%. This means that I can take a maximum loss of $1.5\% \times 5,00,000 = 7,500$ on one trade. 
+
+Since I can lose $3.65 \times 1,500 = 5,475$ per lot of my selected stock, I can buy a maximum of $7,500 / 5,475 = 1.36$ lots of that stock to stay in my limit.
+}
+
+\subsubsection{Kelly's Criterion}
+The Kelly’s Criterion essentially helps us estimate the optimal bet size (or the fraction of our trading capital) considering –
+\begin{itemize}
+  \item We have a certain information on the bet we are about to take.
+  \item We have an edge taking that particular bet.
+\end{itemize}
+
+The Kelly’s Criterion is an equation, the output of which is a percentage, also known as the Kelly’s percent. The equation is as below:
+\[
+  \textrm{Kelly \%} = \left( W - \frac{1-W}{R} \right) \times 100
+\]
+where $W$ is the winning probability and $R$ is the win-loss ratio.
+
+\dfn{Winning Probability}{The winning probability is defined as the total number of winning trades divided over the total number of trades.}
+\dfn{Win-Loss Ratio}{The win-loss ratio is the average gain of winning trades divided over average loss of the negative trades.}
+
+This Kelly's percentage is the maximum percentage of the capital you should allow on that trade.
+
+However, the Kelly's formula can spit out large percentages such as 70\%. We would obviously not want to risk such a large chunk of capital on a single trade.
+
+To mitigate this problem, we can mix this strategy with the percentage risk strategy. We can setup a higher maximum risk percentage such as 5\%. Then the actual percentage risk we use in the trade would be the max percentage risk multiplied by the Kelly's percentage.
+
+\ex{Kelly's percentage + percentage risk model}{Let us setup the maximum percentage risk as 5\%. For a particular trade, let us say that the Kelly's percentage comes out to be 70\%. Then we can calculate the position size by taking the percentage risk as $70\%$ of $5\% = 1.5\%$!}
