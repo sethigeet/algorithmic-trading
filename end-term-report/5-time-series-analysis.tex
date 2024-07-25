@@ -1,0 +1,275 @@
+\chapter{Time Series Analysis}
+
+\section{Introduction}
+
+\subsection{How Should We Not Predict Stocks}
+
+There are many YT videos predicting future stock prices from past data. Many of them also use concepts such as RNNs, LSTMs, and CNNs. Unfortunately, most of them are useless due to what kind of prediction they are doing.
+
+\subsection{What We Want}
+
+Given the past entries, we want to predict the future values. Note the plural form. Let’s say, our model is a black-box for now, which takes the entries as the last ‘n’ samples, and predicts the next 5 samples.
+
+\noindent Input: $y_0, y_1, y_2, \dots, y_{n-1}$ \\
+\noindent Output: $y_n, y_{n+1}, y_{n+2}, \dots$
+
+\subsection{What happens in the YT videos}
+
+There, the input is the same, however, the output is generally just one value, the prediction at the next time step.
+
+\noindent Input: $y_0, y_1, y_2, \dots, y_{n-1}$ \\
+\noindent Output: $y_n$ \\
+
+However, you must have seen in their thumbnails, that their predictions and the actual values are really close. However, this is SCAM. In fact, what is happening here, is that they divide their dataset into train and validation sets. The validation set, also includes values from the future as inputs! This is exactly why these are useless. Instead of predicting based on the ‘estimate’; of the future value, the actual future value is used to predict the next value. 
+
+In fact, on a closer look, you’ll notice that what these models are actually doing is just copying the previous timestep’s value and outputting that as the prediction. This is why the ‘predictions’ look so close to the real values(they are the same, just delayed by one timestep).
+
+Now, you might wonder what if we use the predicted values again as inputs to predict further values in the future. Sure, this can be done. Unfortunately, the answer is always almost a straight horizontal line, which indicates the last known price in your train set.
+
+This is a glimpse into why predicting stock price movements is hard, because of the Random Walk Hypothesis.
+
+\subsection{Random Walk Hypothesis}
+
+According to this hypothesis, the stock prices follow a random walk. 
+
+\[y_t = y_{t-1} + \epsilon\]
+
+The $\epsilon$ is a noise random variable, generally assumed to be Gaussian. It is 0 mean.
+
+Based on this, we can never predict the next value in the series, as we cannot predict the noise of the term.
+
+Furthermore, when thinking of stock prices as random variables (with appropriate probability spaces), it can be seen that the expected value of the future value is the same as the current value. This is called the ***naive forecast**.* Thus, this completely destroys any prediction capabilities.
+
+Thankfully, this is just a model and is not completely accurate. The stock prices don’t follow a pure random walk, as seen by \textbf{volatility clustering}.
+
+\dfn{Volatility Clustering}{It’s a common observation that the future stock price also reflects that volatility, i.e., if the stock is volatile today, it’ll probably be volatile tomorrow as well. Similarly, if it’s relatively stable today, it’ll probably probably be stable tomorrow as well. This is called volatility clustering, as the volatilities tend to cluster together.}
+
+\subsection{What Should We Predict}
+
+A common misconception would be that we should obviously predict stock prices. But the problem with stock prices is that they are not stationary, as in, they do not come from the same distribution.
+
+This is a problem. For our model to function properly, we must test it on data that comes from the same distribution it is trained on!
+
+For example, if a model is trained to predict the prices of apples, we cannot use it to predict the prices of cars.
+
+This is why, in most of finance, we work with returns instead of prices. In fact, we work with *log* returns.
+
+Another reason to use returns is that they’re scale invariant.  It makes more sense to talk in terms of percentage change rather than the actual difference.
+
+\[R_t = P_t /P_{t-1} - 1\]
+
+$R_t$ here is the return. Log returns are given by:
+
+\[r_t = log(1+R_t)\]
+
+They are more useful than simple returns because we can take the simple ‘average log return’ to get the final price of the stock, which cannot be done using simple returns $R_t$.
+
+\subsection{Efficient Market Hypothesis}
+
+In simple words, this means that the current stock prices reflect all the available information in the market. Thus, one cannot beat the market regularly. There are various forms of this hypothesis, namely the Weak Form, the Semi-Strong Form, and the Strong Form.
+
+\section{Exploring Trends}
+
+One of the ways to explore trends is moving averages which we have already heavily discussed earlier. Another method is to use \emph{Holt's Linear Trend Model}.
+
+\subsection{Holt's Linear Trend Model}
+
+First, let’s revisit simple exponential smoothing. The basic model is:
+
+\begin{equation}
+  \hat y_{t+1|t} = l_t \\
+  l_t = \alpha y_t + (1 - \alpha) l_{t-1}
+\end{equation}
+where $l_t$ denotes the level, an estimate to capture the average, smoothened version of the series.
+
+If we also add a trend term to this equation, we get Holt's linear trend model.
+
+The model consists of three main parts:
+
+\begin{align*}
+  \textrm{Forecast equation: } & \hat y_{t+h|t} = l_t + h b+t \\
+  \textrm{Level equation: } & l_t = \alpha y_t + (1 - \alpha)(t_{t-1} + b_{t-1}) \\
+  \textrm{Trend equation: } & b_t = \beta (l_t - l_{t-1} + (1 - \beta) b_{t-1} \\
+\end{align*}
+where $h$ is the number of steps in the forecast.
+
+The first equation is similar to that of a straight line. The second equation ($l_{t-1} + b_{t-1}$) is just $\hat y_{t+1|t}$. The last equation is the slope part of the first equation. We are tracking differences between the current and the previous level. This level $l_t$ is an estimate of the smoothened version of the time series.
+
+\[
+  \textrm{Error} = \sum_{t=1}^T (y_t - \hat y_{t|t-1})^2 \\
+\]
+\[
+  \alpha, \beta = \textrm{argmin} \ \textrm{Error}
+\]
+
+\subsection{Holt-Winter's Model}
+
+On adding yet another term to the equation, the seasonality of data, we get the Holt-Winter’s Model:
+
+\begin{align*}
+  \textrm{Forecast equation: } & ŷ_{t+h|t} = l_t + hb_t + s_{t+h-m} \\
+  \textrm{Level equation: } & l_t = \alpha (y_t - s_{t-m}) + (1-\alpha)(l_{t-1} + b_{t-1}) \\
+  \textrm{Trend equation: } & b_t = \beta(l_t -  l_{t-1}) + (1 - \beta)b_{t-1} \\
+  \textrm{Seasonality equation: } & s_t = \gamma(y_t - l_{t-1} - b_{t-1}) + (1 - \gamma)s_{t-m};
+\end{align*}
+
+The seasonality terms captures, well, the seasonality of data. If there is a repeating pattern in the time series, this model aims to capture it.
+
+\section{Statistical Models}
+
+\subsection{AR(p)}
+
+\emph{AR} stands for \textbf{Auto-Regressive}, which means that the current value is dependent on $p$ past values. In a way, this is similar to linear regression.
+
+\[
+\hat y_t = b + a_{1}y_{t-1} + a_{2}y_{t-2} + a_{3}y_{t-3} + \dots + a_{p}y_{t-p}
+\]
+
+Assuming this is similar to linear regression, where the noise in predictions is considered gaussian, we can write the above equivalently as:
+
+\[
+y_t = b + a_{1}y_{t-1} + a_{2}y_{t-2} + a_{3}y_{t-3} + \dots + a_{p}y_{t-p} + \epsilon_t
+\]
+
+$\epsilon$$_t$ is a 0 mean, $\sigma$ standard deviation Gaussian.
+
+\subsection{MA(q)}
+
+This stands for Moving Average. However, this is not to be confused with the Simple Moving Average or the Exponential Moving Average discussed earlier.
+
+This too is a linear model, however, it’s a linear combination of past error terms. This is not like any other model we’ve seen before.
+
+\[
+y_t = c + \epsilon_{t} + b_1 \epsilon_{t-1} + b_2 \epsilon_{t-2} + \dots + b_q \epsilon_{t-q}
+\]
+
+\nt{An \emph{MA} model is said to be \textbf{invertible} if it is algebraically equivalent to a converging infinite order AR model. By converging, we mean that the AR coefficients decrease to 0 as we move back in time.}
+
+\subsection{ARMA(p, q)}
+
+\emph{ARMA} is simply a combination of AR(p) and MA(q) models.
+
+\[
+y_t = b + a_1 y_{t-1} + a_2 y_{t-2} + a_3 y_{t-3} + \dots + a_p y_{t-p} + \epsilon_t + b_1 \epsilon_{t-1} + b_2 \epsilon_{t-2} + \dots + b_q \epsilon_{t-q}
+\]
+
+This is a pretty straightforward model, however, this wouldn’t work if the time series we’re working with isn’t stationary! This is why, we introduce the ARIMA model.
+
+\subsection{ARIMA{p, d, q}}
+
+The \emph{I} stands for \emph{integrated}.
+
+We had already seen what stationarity is. Now, if there was a way to make the time series stationary, we could simply use \emph{ARMA}. This is exactly the philosophy behind \emph{ARIMA}. 
+
+Time differencing a series, as it turns out, helps to make it stationary. Thus, ‘d’ is the number of times the series is differenced, before applying \emph{ARMA}.
+
+The \emph{ARIMA} model works similar to an ML model. The parameters a and b are learnt as the solution to some optimization problem, generally minimizing the \emph{RMSE}.
+
+For finding the best values of the hyper-parameters $p$, $q$, and $d$, we will use some tests.
+
+\nt{We are talking about weak-sense stationarity here. In fact, strong sense stationarity isn’t used all that often. All this means, is that the mean and the auto-covariance of the series, should be the same over all equal time intervals. If not, then the whole notion of ‘the’ mean or ‘the’ variance is meaningless, as they’d be functions of time!}
+
+\subsection{ADF Test}
+
+The Augmented Dickey-Fuller test is designed to check if a time series is stationary or not.
+
+This is a statistical test, in which a null hypothesis is either accepted or rejected, depending on the p-value obtained. This test can be thought of like an API, or a black-box. You input a time series, and a sufficiently low p-value (less than 0.05) would indicate that the series is stationary.
+
+This can be used to to find the parameter ‘d’ of ARIMA.
+
+We simply keep on differencing until the series becomes stationary!
+
+Whenever we want to fit such models, we want our series to be stationary.
+
+\subsection{Auto Correlation Function (ACF)}
+
+\emph{Auto-correlation function} is a method used to choose the parameter $q$ of \emph{ARIMA}.
+
+In a nutshell, we input our time series into this function, and we get a plot. The plot consists of points and a margin. The number of values, starting from the origin, which lie above this margin, would be our $q$. Note, occasionally, due to pure chance, it’s possible that a bunch of values are inside this margin and suddenly one jumps out, however, these are insignificant, as this can be attributed to rare events.
+
+\subsection{Partial Auto Correlation Function (PACF)}
+
+The \emph{Partial Auto Correlation Function} is used to select the AR parameter $p$.
+
+\tip{For a lot of stock data, the best ARIMA model you’ll get is ARIMA(0,1,0). This is nothing but a random walk. Hence, this again proves that stock price prediction is not an easy task!}
+
+\nt{There are other models out there as well, which are a variation on ARIMA, such as seasonal ARIMA and Auto ARIMA.}
+
+\section{GARCH}
+
+\subsection{Overview}
+
+GARCH stands for Generalized Auto-Regressive Conditional Heteroskedasticity.
+
+\dfn{Heteroskedasticity}{In statistics, a sequence of random variables is homoscedastic if all its random variables have the same finite variance; this is also known as homogeneity of variance. The complementary notion is called heteroscedasticity, also known as heterogeneity of variance}
+
+GARCH aims to predict the future volatility of a time series. Highly volatile stock data tends to appear together, and so does low volatile data.
+
+This means that at least some aspect of stock data might be predictable!
+
+\subsection{ARCH}
+
+\subsubsection{Overview}
+
+Till now, our models have been of the form:
+
+\[
+y_t = f(x_t, x_{t-1}, \dots, x_{t-p}) + \epsilon_t
+\]
+
+Our primary focus till now was to try and model the ‘mean’ part, that is, the $f(x_t, x_{t-1}, \dots, x_{t-p})$, while waving off $\epsilon_t$ as unpredictable noise.
+
+Now, we aim to try and model this noise. Note: the error is still unpredictable. However, we’re trying to model the parameters of the random variable representing the error, i.e., the variance.
+
+\subsubsection{Modelling the Error}
+
+\[
+\epsilon_t = z_t \sigma_t
+\]
+
+Here $z_t$ is the stochastic term, while $\sigma_t$ is the time-dependent variance of the residuals. $z_t$ often represents a noise process, which is strong sense stationary.
+
+Now, $\sigma_t$ is modeled by:
+
+\[
+\sigma^2_t = \omega + a_1 \epsilon^2_{t-1}
+\]
+
+This is the \emph{ARCH(1)} model. Including past $p$ terms makes it an \emph{ARCH(p)} model.
+
+This now is an auto-regressive model for the variance, with the only subtlety being that the past terms are errors instead of variances. $z_t$ is often considered to be a standard normal. 
+
+Therefore, by using this model:
+\begin{itemize}
+  \item Given previous error terms, $E[\epsilon^2_t|\epsilon_{t-1}, \epsilon_{t-2}, \dots, \epsilon_{t-p}] = \sigma^2_t$
+  \item The unconditional expectation, $E[\epsilon^2_t] = \frac{\omega}{1 - a_1}$ for \emph{ARCH(1)}
+  \item The ACF and PACF for squared errors contain significant lags, which decay geometrically.
+\end{itemize}
+
+These points make the ARCH model a good fit for financial data. The residuals on stock returns, when squared, also contain significant lags. This and the zero expected values are why ARCH seems like a good fit.
+
+\subsection{GARCH (Generalized ARCH)}
+
+The problem with ARCH is that the error terms are random, which can make the variance swing around quite quickly. However, we want a persistence of variance. Thus, instead of just using past error terms, we also use past variances.
+
+\subsubsection{Modelling the Error}
+
+\[
+\sigma^2_t = \omega + a_1 \epsilon^2_{t-1} + b_1 \sigma^2_{t-1}
+\]
+
+This way, a high variance yesterday also causes a high variance today, so we have achieved the persistence we wanted. This now models volatility clustering.
+
+The above formula is for \emph{GARCH(1, 1)}. The general form \emph{GARCH(p, q)} looks like:
+
+\[
+\sigma^2_t = \omega + \sigma a_i \epsilon^2_{t-i} + b_i \sigma^2_{t-i}
+\]
+
+A common mistake people make is thinking of $\sigma_t$ to be random. The randomness is caused by $z_t$.
+
+\subsection{Uses of GARCH}
+
+It is very popular to model the volatility of a stock, which comes in handy when one wants to price financial instruments such as Options. In fact, the \emph{Black-Scholes} option pricing equation uses the volatility of the underlying company’s stock over the expiry date.
+
+Another idea which I encourage you to think about, is the combination of \emph{ARIMA} and \emph{GARCH}. This is quite a popular approach, where the \emph{ARIMA} part models the mean and the \emph{GARCH} part models the residuals.
